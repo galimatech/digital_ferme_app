@@ -19,4 +19,6 @@ class Harvest{
     quantity = json['quantity'],
     user = User.fromJson(json['user']),
     speculation = Speculation.fromJson(json['speculation']);
+  
+
 }

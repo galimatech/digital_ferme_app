@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+
 import '../../utils/harvest.dart';
 import '../../utils/service.dart';
 import '../../widget/spinner_widget.dart';
@@ -37,7 +38,7 @@ class _HarvestPageState extends State<HarvestPage> {
           backgroundColor: Colors.white,
           elevation: 0.0,
           title: ClipRect(child: Image.asset('images/logoFarm.gif',width: 60.0,height: 60.0,)),
-          actions: <Widget>[ IconButton(icon: const Icon(Icons.local_florist_outlined),onPressed: () {})],
+          /* actions: <Widget>[ IconButton(icon: const Icon(Icons.local_florist_outlined),onPressed: () {})], */
         )),
       body: Container( child: load ? Center(child: SpinnerWidget()) : layout(),
         decoration: BoxDecoration(image: DecorationImage(image: AssetImage("images/speculation.jpg"),fit: BoxFit.cover,),),
@@ -89,15 +90,16 @@ class _HarvestPageState extends State<HarvestPage> {
   Future<void> getData() async {
     var res = await CallApi().getData("/api/v1/harvest");
     var body = jsonDecode(utf8.decode(res.bodyBytes));
-    if(body['success']){
-      for(var json in body['object']){
+
+     if(body['success']){
+      for(var json in body['object'] ){
         harvests.add(Harvest.fromJson(json));
       }
       showHarvest = harvests;
       setState(() {
         load = false;
       });
-    }
+    } 
   }
 
   void filterItem(pattern){

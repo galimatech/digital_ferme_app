@@ -16,7 +16,10 @@ class MyApp extends StatelessWidget {
   static const String title = 'Navigation Drawer';
 
   @override
-  Widget build(BuildContext context) => MaterialApp(
+  Widget build(BuildContext context) {
+  
+  return 
+    MaterialApp(
         debugShowCheckedModeBanner: false,
         title: title,
         theme: ThemeData(
@@ -24,6 +27,9 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.green,canvasColor: Colors.grey[200],
           iconTheme: const IconThemeData(color: Color(0xFF7ED957)),
           appBarTheme: const AppBarTheme(iconTheme: IconThemeData(color: Color(0xFF7ED957)),)),
+          
           home: SplashScreenPage(),
-      );
+      //)
+  );
+}
 }

@@ -37,7 +37,7 @@ class _MatiereHistoryPageState extends State<MatiereHistoryPage> {
           backgroundColor: Colors.white,
           elevation: 0.0,
           title: ClipRect(child: Image.asset('images/logoFarm.gif',width: 60.0,height: 60.0,)),
-          actions: <Widget>[ IconButton(icon: const Icon(Icons.local_florist_outlined),onPressed: () {})],
+          /* actions: <Widget>[ IconButton(icon: const Icon(Icons.local_florist_outlined),onPressed: () {})], */
         )),
       body: Container( child: load ? Center(child: SpinnerWidget()) : layout(),
         padding: EdgeInsets.symmetric(horizontal: 20.0,vertical: 10.0),)

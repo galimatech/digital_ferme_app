@@ -20,7 +20,7 @@ class Compte{
     map['id'] = id;
     map['number'] = number;
     map['name'] = name;
-    map['parent'] = parent;
+    map['parent'] = parent == null ? null: parent!.toMap();
 
     return map;
   }

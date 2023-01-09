@@ -1,11 +1,10 @@
 import 'dart:convert';
-
 import '../../page/utilWidgets/home.dart';
 import '../../utils/service.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class LoginPage extends StatefulWidget {
+class LoginPage   extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
 
   @override
@@ -19,6 +18,7 @@ class _LoginPageState extends State<LoginPage> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   bool checkedLoad = false;
   bool crypte = false;
+  String role="";
 
   _showMsg(BuildContext contetxt, msg) {
     //
@@ -160,12 +160,13 @@ class _LoginPageState extends State<LoginPage> {
     setState(() {
       _isLoading = true;
     });
-
+  
     var data = {'username': mailController.text, 'password': passwordController.text};
 
     var res = await CallApi().auth(data);
-    var body = json.decode(res.body);
-
+    final body = json.decode(res.body);
+   
+   
     if (body['data']['token'] != null) {
       print('yes');
       SharedPreferences localStorage = await SharedPreferences.getInstance();
@@ -173,13 +174,24 @@ class _LoginPageState extends State<LoginPage> {
       localStorage.setString('user', body['data']['firstname'] + " " + body['data']['lastname']);
       localStorage.setString('role', body['data']['role']);
       localStorage.setString('username', body['data']['username']);
-      Navigator.of(context).pushReplacement(
+      //localStorage.setString('role', body['role']);
+
+      
+    /*   Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (_) {
+          return Provider(create: (context) => this.role, builder: (context, child) => HomePage());
+        }),
+      ); */
+   
+       Navigator.of(context).pushReplacement(
         MaterialPageRoute(builder: (_) {
           return HomePage();
         }),
-      );
+      ); 
     }else{
-      _showMsg(context, "lLoginou mot de passe incorrect");
-    }
+      _showMsg(context, "Login ou mot de passe incorrect");
+    }   
+    //print(MediaQuery.of(context).size.height);
+    //print(MediaQuery.of(context).size.width);
   }
 }

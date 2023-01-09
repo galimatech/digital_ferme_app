@@ -5,6 +5,8 @@ import '../../utils/service.dart';
 import 'package:flutter/material.dart';
 import '../utilWidgets/home.dart';
 import '../utilWidgets/scanner.dart';
+import '../utilWidgets/iconSizeAccueil.dart';
+
 
 class PoultryPage extends StatefulWidget {
   const PoultryPage({ Key? key }) : super(key: key);
@@ -31,7 +33,7 @@ class _PoultryPageState extends State<PoultryPage> {
           backgroundColor: Colors.white,
           elevation: 0.0,
           title: ClipRect(child: Image.asset('images/logoFarm.gif',width: 60.0,height: 60.0,)),
-          actions: <Widget>[ IconButton(icon: const Icon(Icons.flutter_dash_outlined),onPressed: () { })],
+          //actions: <Widget>[ IconButton(icon: const Icon(Icons.flutter_dash_outlined),onPressed: () { })],
         ),
         floatingActionButton: IconButton(onPressed: (){Navigator.pushAndRemoveUntil<void>(context,MaterialPageRoute<void>(builder: (BuildContext context) => HomePage(),
       ),ModalRoute.withName("/"));}, icon: Icon(Icons.home,size: 35.0,)),
@@ -64,7 +66,7 @@ class _PoultryPageState extends State<PoultryPage> {
             children: [ 
             IconButton(onPressed: (){Navigator.of(context).push(MaterialPageRoute(
           builder: (context) => PoultryListPage(true)));}, 
-            icon: Icon(Icons.login_outlined,),iconSize:100,),
+            icon: Icon(Icons.login_outlined,),iconSize:iconSizeMedia(context),),
             SizedBox(height: 10,),
             Text("Actuellement présent",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: Colors.white),),
             SizedBox(height: 10,),
@@ -78,7 +80,7 @@ class _PoultryPageState extends State<PoultryPage> {
             children: [
             IconButton(onPressed: (){Navigator.of(context).push(MaterialPageRoute(
           builder: (context) => PoultryListPage(false)));}, 
-            icon: Icon(Icons.launch_outlined,),iconSize:100,),
+            icon: Icon(Icons.launch_outlined,),iconSize:iconSizeMedia(context),),
             SizedBox(height: 10,),
             Text("Historique des bandes",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: Colors.white),),
             SizedBox(height: 10,),
@@ -116,7 +118,7 @@ class _PoultryPageState extends State<PoultryPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
             IconButton(onPressed: (){Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => PoultryRegisterPage()));}, icon: Icon(Icons.loupe_outlined,),iconSize:100,),
+              builder: (context) => PoultryRegisterPage()));}, icon: Icon(Icons.loupe_outlined,),iconSize:iconSizeMedia(context),),
             SizedBox(height: 10,),
             Text("Enregistrer une bande",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: Colors.white),),]
           ),
@@ -127,6 +129,8 @@ class _PoultryPageState extends State<PoultryPage> {
       SizedBox(height: 10,),]
     );
   }
+
+
 
   Future<void> getData() async {
 

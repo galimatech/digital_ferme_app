@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'package:agri_galimatech/page/utilWidgets/TitleDynamic.dart';
+
 import '../../utils/category.dart';
 import '../../utils/bowl.dart';
 import '../../utils/service.dart';
@@ -244,14 +246,10 @@ class _FishRegisterPageState extends State<FishRegisterPage> {
                                             bottom: 15.0,
                                             left: 25.0,
                                             right: 25.0),
-                                        child: Text(
+                                        child: DynamicText(
                                           'VALIDER',
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 24.0,
-                                            decoration: TextDecoration.none,
-                                            fontWeight: FontWeight.normal,
-                                          ),
+                                            FontWeight.normal,
+                                            Colors.white,
                                         ),
                                       ),
                                       onPressed: () {

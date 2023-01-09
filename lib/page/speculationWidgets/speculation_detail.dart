@@ -1,12 +1,12 @@
 
 import 'dart:convert';
-
 import '../../utils/calendary.dart';
 import '../../utils/service.dart';
 import '../../utils/speculation.dart';
 import '../../widget/external_widget.dart';
 import '../../widget/spinner_widget.dart';
 import 'package:flutter/material.dart';
+import '../utilWidgets/detailsContainer.dart';
 
 class SpeculationDetailPage extends StatefulWidget {
   final String nameSubject;
@@ -22,7 +22,7 @@ class _SpeculationDetailPageState extends State<SpeculationDetailPage> {
   bool load = true;
   List<Calendary> calendarys = [];
   late Speculation speculation;
-  TextEditingController _controllerDescription = new TextEditingController();
+  late TextEditingController _controllerDescription = new TextEditingController();
 
   @override
   void initState() {
@@ -39,7 +39,7 @@ class _SpeculationDetailPageState extends State<SpeculationDetailPage> {
           backgroundColor: Colors.white,
           elevation: 0.0,
           title: ClipRect(child: Image.asset('images/logoFarm.gif',width: 60.0,height: 60.0,)),
-          actions: <Widget>[ IconButton(icon: const Icon(Icons.set_meal_outlined),onPressed: () {})],
+         /*  actions: <Widget>[ IconButton(icon: const Icon(Icons.set_meal_outlined),onPressed: () {})], */
         )),
       body: Container( child: load? Center(child: SpinnerWidget()) : screen(),
         decoration: BoxDecoration(image: DecorationImage(image: AssetImage("images/speculation.jpg"),fit: BoxFit.cover,),),)
@@ -50,15 +50,22 @@ class _SpeculationDetailPageState extends State<SpeculationDetailPage> {
     return Padding(
       padding: EdgeInsets.all(10.0),
       child: Column(
-        children: <Widget>[
-          Expanded(
-              flex: 1,
-              child: Padding(
+        children: <Widget>[Padding(
               padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-              child: Container(
-                  height: 200,
-                  decoration: BoxDecoration(color: Color.fromRGBO(0, 0, 0, 0.6), borderRadius: BorderRadius.all(Radius.circular(15))),
-                  child: Column(
+              child: ContainerDetails(headerDetail(),decorationDetail()
+                   )),
+          Expanded(child: itemList())
+        ],
+      ),
+    );
+  }
+
+  Decoration decorationDetail(){
+    return const BoxDecoration(color: Color.fromRGBO(0, 0, 0, 0.6), borderRadius: BorderRadius.all(Radius.circular(15)));
+  }
+
+  Widget headerDetail(){
+    return Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Row(
@@ -66,28 +73,36 @@ class _SpeculationDetailPageState extends State<SpeculationDetailPage> {
                           Expanded(
                               child: Padding(
                                   padding: EdgeInsets.only(left: 10.0),
-                                  child: Text(speculation.name,style: TextStyle(fontSize: 30.0, color: Colors.white, fontWeight: FontWeight.bold),
+                                  child: Text(
+                                    speculation.name,
+                                    style: TextStyle(
+                                      fontSize: 30.0, 
+                                      color: Colors.white, 
+                                      fontWeight: FontWeight.bold),
                                   ))),
-                          Expanded(child: Text(speculation.seedName, style: TextStyle(fontSize: 30.0, color: Colors.white)))
+                          Expanded(child: Text(
+                            speculation.seedName, 
+                            style: TextStyle(
+                              fontSize: 30.0, 
+                              color: Colors.white)))
                         ],
                       ),
                       Row(
                         children: [
-                          Expanded(child: Padding(padding: EdgeInsets.only(left: 10.0), child: Text(speculation.seedDate.toString(), style: TextStyle(fontSize: 30.0, color: Colors.white)))),
+                          Expanded(child: Padding(
+                            padding: EdgeInsets.only(left: 10.0), 
+                            child: Text(speculation.seedDate.toString(), 
+                          style: TextStyle(fontSize: 30.0, color: Colors.white)))),
                           Expanded(child: Text(speculation.plantingName, style: TextStyle(fontSize: 30.0, color: Colors.white)))
                         ],
                       ),
                     ],
-                  )))),
-          Expanded(flex: 4, child: itemList())
-        ],
-      ),
-    );
+                  );
   }
 
   Widget itemList() {
     return ListView.builder(
-        padding: const EdgeInsets.all(8),
+        padding: const EdgeInsets.all(4),
         itemCount: calendarys.length,
         itemBuilder: (BuildContext context, int index) {
           return GestureDetector(
@@ -97,7 +112,7 @@ class _SpeculationDetailPageState extends State<SpeculationDetailPage> {
                   actionsAlignment: MainAxisAlignment.spaceBetween,
                   backgroundColor: Color.fromRGBO(255, 255, 255, 0.8),
                   title: Text("Confirm !",style: TextStyle(fontSize: 50.0,fontWeight: FontWeight.bold,)),
-                  content: calendarys[index].make || calendarys[index].giveUp ? Text("Dommage cette tache est deja effectuee ?",style: TextStyle(fontSize: 30.0,)): Text("Avez vous effectuez cette tache ?",style: TextStyle(fontSize: 30.0,)),
+                  content: calendarys[index].make || calendarys[index].giveUp ? Text("Dommage cette tâche est deja effectuée ?",style: TextStyle(fontSize: 30.0,)): Text("Avez-vous effectuez cette tâche ?",style: TextStyle(fontSize: 30.0,)),
                   actions: [
                     IconButton(onPressed: (){Navigator.pop(context);}, icon: Icon(Icons.close_outlined),iconSize: 60,color: Colors.red),
                     calendarys[index].make || calendarys[index].giveUp ? IconButton(icon: Icon(Icons.sentiment_very_dissatisfied),onPressed: (){},iconSize: 1) : IconButton(onPressed: (){Navigator.pop(context); giveUpWidget(calendarys[index].id);}, icon: Icon(Icons.thumb_down),iconSize: 60,color: Colors.indigo),
@@ -106,36 +121,49 @@ class _SpeculationDetailPageState extends State<SpeculationDetailPage> {
                 );
               },barrierDismissible: false);
             },
-          child:Padding(
+          child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-              child: Container(
-                  height: 200,
-                  decoration: BoxDecoration(color: calendarys[index].make ? Color.fromRGBO(128, 255, 0, 1.0): calendarys[index].giveUp ? Colors.indigo:  Color.fromRGBO(255, 0, 0, 1.0),
-                   borderRadius: BorderRadius.all(Radius.circular(15))),
-                  child: Column(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
-                    Row(
-                      children: [
-                        Expanded(
-                            child: Padding(
-                                padding: EdgeInsets.only(left: 10.0),
-                                child: Text(
-                                  calendarys[index].name,
-                                  style: TextStyle(fontSize: 30.0, color: Colors.white, fontWeight: FontWeight.bold),
-                                ))),
-                        Expanded(child: Text(calendarys[index].date, style: TextStyle(fontSize: 30.0, color: Colors.white)))
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Expanded(
-                            child: Padding(
-                                padding: EdgeInsets.only(left: 10.0),
-                                child: Text(calendarys[index].intervention,style: TextStyle(fontSize: 30.0, color: Colors.white, fontWeight: FontWeight.bold),
-                                ))),
-                      ],
-                    )
-                  ]))));
+              child: ContainerDetails( 
+                  listDetails(index),
+                  decorationList(index),
+                  
+                  )));
         });
+  }
+
+ Decoration decorationList(int index){
+    return BoxDecoration(color: calendarys[index].make ? const Color.fromRGBO(128, 255, 0, 1.0): calendarys[index].giveUp ? Colors.indigo:  const Color.fromRGBO(255, 0, 0, 1.0),
+                         borderRadius:  const BorderRadius.all(Radius.circular(15)),
+
+    );
+    
+  }
+  
+
+Widget listDetails(int index){
+    
+    return Column(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
+                      Row(
+                        children: [
+                          Expanded(
+                              child: Padding(
+                                  padding: EdgeInsets.only(left: 10.0),
+                                  child: Text(
+                                    calendarys[index].name,
+                                    style: TextStyle(fontSize: 30.0, color: Colors.white, fontWeight: FontWeight.bold),
+                                  ))),
+                          Expanded(child: Text(calendarys[index].date, style: TextStyle(fontSize: 30.0, color: Colors.white)))
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Expanded(
+                              child: Padding(
+                                  padding: EdgeInsets.only(left: 10.0),
+                                  child: Text(calendarys[index].intervention,style: TextStyle(fontSize: 30.0, color: Colors.white, fontWeight: FontWeight.bold),
+                                  ))),
+                        ],
+                      )]);
   }
 
   Future giveUpWidget(int id){
@@ -177,18 +205,38 @@ class _SpeculationDetailPageState extends State<SpeculationDetailPage> {
   }
 
   Future<void> getData() async {
-    var response = await CallApi().getData("/api/v1/speculation/byName?name=" + this.nameSubject);
+    
+    var response = await CallApi().getData("/api/v1/speculation/byName?name=$nameSubject");
+    
     var body = jsonDecode(utf8.decode(response.bodyBytes));
+    //int index = calendarys.indexWhere((element) => element.speculation_id ==id);
+    //var response2 = await CallApi().getData("/api/v1/calendar/speculation/$id");
     if (body['success']) {
       speculation = Speculation.fromJson(body['speculation']);
+      //getDataFromCalendars(speculation.id);
+      int id= speculation.id;
+      var response2 = await CallApi().getData("/api/v1/calendar/speculation/$id");
+      var body2 = jsonDecode(utf8.decode(response2.bodyBytes)); 
+  
+      for (var cal in body2['calendars']) {
+          calendarys.add(Calendary.fromMap(cal));
+        
+          }
+    }
+
+    setState(() {
+        load = false;
+      }); 
+
+      /*     speculation = Speculation.fromJson(body['speculation']);
       for (var cal in body['speculation']['calendary']) {
         calendarys.add(Calendary.fromMap(cal));
       }
       setState(() {
         load = false;
-      });
-    }
+      }); */
   }
+
 
   Future<void> onMake(int id) async{
     Navigator.pop(context);

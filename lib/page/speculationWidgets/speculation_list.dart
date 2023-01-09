@@ -39,7 +39,7 @@ class _SpeculationListPageState extends State<SpeculationListPage> {
           backgroundColor: Colors.white,
           elevation: 0.0,
           title: ClipRect(child: Image.asset('images/logoFarm.gif',width: 60.0,height: 60.0,)),
-          actions: <Widget>[ IconButton(icon: const Icon(Icons.set_meal_outlined),onPressed: () {})],
+        /*   actions: <Widget>[ IconButton(icon: const Icon(Icons.set_meal_outlined),onPressed: () {})], */
         )),
       body: Container( child: load? Center(child: SpinnerWidget()) : layout(),
         decoration: BoxDecoration(image: DecorationImage(image: AssetImage("images/speculation.jpg"),fit: BoxFit.cover,),),)
@@ -49,6 +49,7 @@ class _SpeculationListPageState extends State<SpeculationListPage> {
   Future<void> getPresent(bool b) async {
     var response = await CallApi().getData("/api/v1/speculation/byPresent?present=" + b.toString());
     var body = jsonDecode(utf8.decode(response.bodyBytes));
+
     if (body['success']) {
       for (var item in body['speculations']) {
         speculations.add(Speculation.fromJson(item));
@@ -67,7 +68,7 @@ class _SpeculationListPageState extends State<SpeculationListPage> {
       child: TextFormField(
         decoration: InputDecoration(border: OutlineInputBorder(),labelText: "Vous cherchez quel produit ?"),
         onChanged: (pattern) => filterItem(pattern),),),
-        Container(child: itemList())
+        Expanded(child: itemList())
     ]);
   }
 

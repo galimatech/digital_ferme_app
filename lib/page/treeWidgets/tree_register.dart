@@ -237,10 +237,10 @@ class _TreeRegisterPageState extends State<TreeRegisterPage> {
       var response = await CallApi().postData(data, "/api/v1/tree");
       var body = jsonDecode(utf8.decode(response.bodyBytes));
     if(body['success']){
-      MyWidget().notification(context, "Enregistement reussit");
+      MyWidget().notification(context, "Enregistrement reussi");
       Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => GenerateCodePage(body['tree']['name'],'tree')));
     }else{
-      MyWidget().notification(context,"Echec de l'enregistement");
+      MyWidget().notification(context,"Echec de l'enregistrement");
     }
   }
 }

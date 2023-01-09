@@ -37,14 +37,26 @@ class _StockHistoryPageState extends State<StockHistoryPage> {
           backgroundColor: Colors.white,
           elevation: 0.0,
           title: ClipRect(child: Image.asset('images/logoFarm.gif',width: 60.0,height: 60.0,)),
-          actions: <Widget>[ IconButton(icon: const Icon(Icons.local_florist_outlined),onPressed: () {})],
+          /* actions: <Widget>[ IconButton(icon: const Icon(Icons.local_florist_outlined),onPressed: () {})], */
         )),
       body: Container( child: load ? Center(child: SpinnerWidget()) : layout(),
         padding: EdgeInsets.symmetric(horizontal: 20.0,vertical: 10.0),)
     );
   }
 
-  Widget layout(){
+    Widget layout(){
+    return ListView(
+        children: [
+          Padding(padding: EdgeInsets.all(8.0),
+          child: TextField(
+            decoration: InputDecoration(border: OutlineInputBorder(),labelText: "recherche compte"),
+            onChanged: (pattern) => filterItem(pattern),),),
+            itemList(),
+        ],
+    );
+  }
+
+/*   Widget layout(){
     return Column(
       children: [
         Padding(
@@ -56,11 +68,11 @@ class _StockHistoryPageState extends State<StockHistoryPage> {
         itemList()
       ],
     );
-  }
+  } */
 
   Widget itemList(){
     return SingleChildScrollView(
-      scrollDirection: Axis.vertical,
+      padding: EdgeInsets.symmetric(horizontal: 7.5),  scrollDirection: Axis.vertical,
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         child: DataTable(

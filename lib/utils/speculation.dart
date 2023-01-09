@@ -1,4 +1,5 @@
 
+
 import '../utils/planting.dart';
 import '../utils/seed.dart';
 
@@ -19,6 +20,7 @@ class Speculation {
   late Seed seed;
 
   late Planting planting;
+  
 
   Speculation.fromJson(Map<String, dynamic> json):
     id = json['id'],
@@ -29,6 +31,7 @@ class Speculation {
     plantingName = json['plantingName'],
     planting = Planting.fromJson(json['planting']),
     seed = Seed.fromJson(json['seed']);
+    
 
   Map<String,dynamic> toMap(){
     var map = Map<String,dynamic>()  ;

@@ -1,10 +1,12 @@
-import 'home.dart';
-import 'package:flutter/material.dart';
-import 'dart:async';
-
 import 'package:shared_preferences/shared_preferences.dart';
-
+//import '../speculationWidgets/speculation_detail.dart';
+//import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'login.dart';
+import 'dart:async';
+import 'home.dart';
+
+
 
 class SplashScreenPage extends StatefulWidget {
   @override
@@ -34,7 +36,9 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
 
   startSplashScreen() async {
     var duration = const Duration(seconds: 5);
+      
     return Timer(duration, () {
+      
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(builder: (_) {
           return _isLoggedIn ? HomePage() : LoginPage();
@@ -45,6 +49,11 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
 
   @override
   Widget build(BuildContext context) {
+      //print("My screen width");
+      //print(widhtContainer(context));
+     // Provider(create: (context) => ContainerDetails(),
+               // child: SplashScreenPage(),);
+      
     return Scaffold(
       backgroundColor: Colors.black,
       body: Stack(
@@ -73,7 +82,7 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
                     Padding(
                       padding: const EdgeInsets.only(top: 200.0),
                     ),
-                    Text("Galimatech for a better web and mobil apps",
+                    Text("Galimatech for a better web and mobile apps",
                       style: TextStyle(color: Colors.black, fontSize: 18.0, fontWeight: FontWeight.bold),)
                   ],
                 ),

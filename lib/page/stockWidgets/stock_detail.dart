@@ -1,4 +1,7 @@
 import 'dart:convert';
+import 'package:agri_galimatech/page/utilWidgets/TitleDynamic.dart';
+import 'package:agri_galimatech/page/utilWidgets/labelDynamic.dart';
+
 import '../../utils/service.dart';
 import '../../utils/shop.dart';
 import '../../widget/spinner_widget.dart';
@@ -32,7 +35,7 @@ class _StockDeatilPageState extends State<StockDeatilPage> {
           backgroundColor: Colors.white,
           elevation: 0.0,
           title: ClipRect(child: Image.asset('images/logoFarm.gif',width: 60.0,height: 60.0,)),
-          actions: <Widget>[ IconButton(icon: const Icon(Icons.list_alt_outlined),onPressed: () {})],),
+      /*     actions: <Widget>[ IconButton(icon: const Icon(Icons.list_alt_outlined),onPressed: () {})] ,*/),
           body:
            Container(
           decoration: BoxDecoration(
@@ -70,8 +73,8 @@ class _StockDeatilPageState extends State<StockDeatilPage> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      Text("Stock de "+product,style: TextStyle(fontSize: 25.0,fontWeight: FontWeight.bold,color: Colors.white),),
-                      Text("En entrepot : "+inStore,style: TextStyle(fontSize: 22.0,fontWeight: FontWeight.bold,color: Colors.white),)
+                      DynamicText("Stock de "+product, FontWeight.bold,Colors.white),
+                      DynamicText("En entrepot : "+inStore, FontWeight.bold, Colors.white,)
                     ]
                   )))),
           Expanded(
@@ -97,7 +100,8 @@ class _StockDeatilPageState extends State<StockDeatilPage> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(stocks[index]["shop"]["name"],style: TextStyle(color: Colors.white, fontSize: 25, fontWeight: FontWeight.bold),textAlign: TextAlign.center,),
+                      DynamicText(stocks[index]["shop"]["name"], FontWeight.bold, Colors.white //textAlign: TextAlign.center,
+                      ),
                       Text(stocks[index]["shop"]["adress"].toString(),style: TextStyle(color: Colors.white, fontSize: 25,fontWeight: FontWeight.bold),textAlign: TextAlign.center,),
                       Text(stocks[index]["quantity"].toString(),style: TextStyle(color: Color(0xFF7ED957), fontSize: 25,fontWeight: FontWeight.bold),),
                     ],))),);},);}
@@ -109,7 +113,7 @@ class _StockDeatilPageState extends State<StockDeatilPage> {
    controller.text="0";
     showDialog(context: context, builder: (context){
       return AlertDialog(
-        title: Text("Déplacer des "+product,style: TextStyle(fontSize: 25),),
+        title: Text("Déplacer des "+product,style: TextStyle(fontSize: 20),),
         content: Container(height: 200.0, child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -119,8 +123,8 @@ class _StockDeatilPageState extends State<StockDeatilPage> {
               decoration: InputDecoration(border: OutlineInputBorder(),
               icon: Icon(Icons.hourglass_bottom_outlined),
               labelText: "La quantité")),
-              ElevatedButton(onPressed: (){postStock(product,controller.text,"in",shop.id);}, child: Text("De "+shop.name+" vers l'entrepot",style: TextStyle(fontSize: 20))),
-            ElevatedButton(onPressed: (){postStock(product,controller.text,"out",shop.id);}, child: Text("De l'entrepot vers "+shop.name,style: TextStyle(fontSize: 20)))
+              ElevatedButton(onPressed: (){postStock(product,controller.text,"in",shop.id);}, child: DynamicLabel("De "+shop.name+" vers l'entrepot", FontWeight.normal, Colors.white)),
+            ElevatedButton(onPressed: (){postStock(product,controller.text,"out",shop.id);}, child: DynamicLabel("De l'entrepot vers "+shop.name, FontWeight.normal,Colors.white))
           ],
         ),
       ));

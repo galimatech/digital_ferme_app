@@ -1,5 +1,8 @@
 import 'dart:convert';
 
+import 'package:agri_galimatech/page/utilWidgets/TitleDynamic.dart';
+import 'package:agri_galimatech/page/utilWidgets/labelDynamic.dart';
+
 import '../../page/poultryWidgets/poultry.dart';
 import '../../utils/poultry.dart';
 import '../../utils/service.dart';
@@ -51,17 +54,18 @@ class _PoultryOutPageState extends State<PoultryOutPage> {
                 width: 60.0,
                 height: 60.0,
               )),
-              actions: <Widget>[IconButton(icon: const Icon(Icons.flutter_dash_outlined), onPressed: () {})],
+              /* actions: <Widget>[IconButton(icon: const Icon(Icons.flutter_dash_outlined), onPressed: () {})], */
             )),
         body: Container(
           child: egg ? formularEgg() : formular(),
+          // ignore: prefer_const_constructors
           decoration: BoxDecoration(
-            image: DecorationImage(
+            image: const DecorationImage(
               image: AssetImage("images/poultry.png"),
               fit: BoxFit.cover,
             ),
           ),
-          padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
         ));
   }
 
@@ -71,23 +75,23 @@ class _PoultryOutPageState extends State<PoultryOutPage> {
         bottom: false,
         child: Container(
             height: MediaQuery.of(context).size.height - 65,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               borderRadius: BorderRadius.all(Radius.circular(10)),
               color: Color.fromRGBO(255, 255, 255, 0.6),
             ),
             child: Form(
                 key: _formKey,
                 child: SingleChildScrollView(
-                  padding: EdgeInsets.all(35.0),
+                  padding: const EdgeInsets.all(35.0),
                   child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: <Widget>[
-                    Padding(padding: EdgeInsets.symmetric(vertical: 20.0),
-                    child: Text("Stockage de "+poultry.categoryName,style: TextStyle(fontSize: 24.0,fontWeight: FontWeight.bold),),),
+                    Padding(padding: const EdgeInsets.symmetric(vertical: 20.0),
+                    child: Text("Stockage de "+ poultry.categoryName, style: const TextStyle(fontSize: 24.0,fontWeight: FontWeight.bold),),),
                     Padding(
-                      padding: EdgeInsets.symmetric(vertical: 20.0),
+                      padding: const EdgeInsets.symmetric(vertical: 20.0),
                       child: TextFormField(
                         keyboardType: TextInputType.number,
                         controller: this._controllerQty,
-                        decoration: InputDecoration(border: OutlineInputBorder(), icon: Icon(Icons.hourglass_bottom_outlined), labelText: "Nombre de poulets"),
+                        decoration: const InputDecoration(border: OutlineInputBorder(), icon: Icon(Icons.hourglass_bottom_outlined), labelText: "Nombre de poulets"),
                         validator: (value) {
                           if (value!.isEmpty) {
                             return "La quantité est obligatoire ";
@@ -97,11 +101,11 @@ class _PoultryOutPageState extends State<PoultryOutPage> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.symmetric(vertical: 20.0),
+                      padding: const EdgeInsets.symmetric(vertical: 20.0),
                       child: TextFormField(
                         keyboardType: TextInputType.number,
                         controller: this._controllerVal,
-                        decoration: InputDecoration(border: OutlineInputBorder(), icon: Icon(Icons.money_outlined), labelText: "La valeur de la vente "),
+                        decoration: const InputDecoration(border: OutlineInputBorder(), icon: Icon(Icons.money_outlined), labelText: "La valeur de la vente "),
                         validator: (value) {
                           if (value!.isEmpty) {
                             return "La valeur est obligatoire ";
@@ -116,12 +120,12 @@ class _PoultryOutPageState extends State<PoultryOutPage> {
                             child: TextButton(
                           child: Text(
                             formattedDate,
-                            style: TextStyle(fontSize: 20.0, color: Colors.black),
+                            style: const TextStyle(fontSize: 20.0, color: Colors.black),
                           ),
                           onPressed: () {
                             DatePicker.showDatePicker(context,
                                 showTitleActions: true,
-                                theme: DatePickerTheme(
+                                theme: const DatePickerTheme(
                                     doneStyle: TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF7ED957)), cancelStyle: TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF7ED957))),
                                 minTime: DateTime(2020, 1, 1),
                                 maxTime: DateTime(2050, 12, 31),
@@ -137,25 +141,21 @@ class _PoultryOutPageState extends State<PoultryOutPage> {
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
-                        Padding(
+                        const Padding(
                           padding: EdgeInsets.only(top: 10, bottom: 10, left: 10, right: 20),
                         ),
                         Expanded(
                           child: Center(
                               child: ElevatedButton(
                             style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all<Color>(Color(0xFF00CC00)),
+                              backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF00CC00)),
                             ),
                             child: Padding(
-                              padding: EdgeInsets.only(top: 15, bottom: 15.0, left: 25.0, right: 25.0),
-                              child: Text(
+                              padding: const EdgeInsets.only(top: 15, bottom: 15.0, left: 25.0, right: 25.0),
+                              child: DynamicText(
                                 'VALIDER',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 24.0,
-                                  decoration: TextDecoration.none,
-                                  fontWeight: FontWeight.normal,
-                                ),
+                                  FontWeight.normal,
+                                  Colors.white,
                               ),
                             ),
                             onPressed: () {
@@ -201,38 +201,46 @@ class _PoultryOutPageState extends State<PoultryOutPage> {
                             return null;
                         },
                       ),
-                    ),
+                    ),              
                     Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        Padding(
-                          padding: EdgeInsets.only(top: 10, bottom: 10, left: 10, right: 20),
-                        ),
-                        Expanded(
-                          child: Center(
-                              child: ElevatedButton(
-                            style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all<Color>(Color(0xFF00CC00)),
-                            ),
-                            child: Padding(
-                              padding: EdgeInsets.only(top: 15, bottom: 15.0, left: 25.0, right: 25.0),
-                              child: Text(
-                                'VALIDER',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 24.0,
-                                  decoration: TextDecoration.none,
-                                  fontWeight: FontWeight.normal,
-                                ),
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: <Widget>[
+                                  Padding(
+                                    padding: EdgeInsets.only(
+                                        top: 10,
+                                        bottom: 10,
+                                        left: 10,
+                                        right: 20),
+                                  ),
+                                  Expanded(
+                                    child: Center(
+                                        child: ElevatedButton(
+                                    style: ButtonStyle(
+                                      backgroundColor:
+                                          MaterialStateProperty.all<Color>(
+                                              Color(0xFF00CC00)),
+                                    ),
+                                      child: Padding(
+                                        padding: EdgeInsets.only(
+                                            top: 15,
+                                            bottom: 15.0,
+                                            left: 25.0,
+                                            right: 25.0),
+                                        child: DynamicText(
+                                          'VALIDER',
+                                            FontWeight.normal,
+                                            Colors.white,
+                                        ),
+                                      ),
+                                      onPressed: () {
+                                        if (_formKeyEgg.currentState!.validate()) {
+                                          _onSaveEgg();
+                                       }
+                                      },
+                                    )),
+                                  )
+                                ],
                               ),
-                            ),
-                            onPressed: () {
-                              if (_formKeyEgg.currentState!.validate()) _onSaveEgg();
-                            },
-                          )),
-                        )
-                      ],
-                    ),
                   ]),
                 ))));
   }
@@ -262,6 +270,7 @@ class _PoultryOutPageState extends State<PoultryOutPage> {
   }
 
   Future<void> _onSaveEgg() async {
+    //print("on save egg");
     var formatter = new DateFormat('yyyy-MM-dd');
     DateTime created = DateTime.now();
     String createdOn = formatter.format(created);

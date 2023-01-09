@@ -1,6 +1,5 @@
-
 import 'dart:convert';
-
+import 'package:agri_galimatech/page/utilWidgets/TitleDynamic.dart';
 import '../../utils/service.dart';
 import '../../utils/speculation.dart';
 import '../../widget/external_widget.dart';
@@ -8,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
-
 import 'farming.dart';
 
 class SpeculationOutPage extends StatefulWidget {
@@ -45,7 +43,7 @@ class _SpeculationOutPageState extends State<SpeculationOutPage> {
           backgroundColor: Colors.white,
           elevation: 0.0,
           title: ClipRect(child: Image.asset('images/logoFarm.gif',width: 60.0,height: 60.0,)),
-          actions: <Widget>[ IconButton(icon: const Icon(Icons.local_florist_outlined),onPressed: () {})],
+          /* actions: <Widget>[ IconButton(icon: const Icon(Icons.local_florist_outlined),onPressed: () {})], */
         )),
       body: Container( child: formular(),
         decoration: BoxDecoration(image: DecorationImage(image: AssetImage("images/speculation.jpg"),fit: BoxFit.cover,),),
@@ -77,7 +75,7 @@ class _SpeculationOutPageState extends State<SpeculationOutPage> {
                                 padding: EdgeInsets.symmetric(vertical: 20.0),
                                 child: TextFormField(
                                   keyboardType:
-                                                    TextInputType.number,
+                                                    TextInputType.phone,
                                                 controller:
                                                     this._controllerQty,
                                                 decoration: InputDecoration(
@@ -86,7 +84,7 @@ class _SpeculationOutPageState extends State<SpeculationOutPage> {
                                                     icon: Icon(Icons
                                                         .hourglass_bottom_outlined),
                                                     labelText:
-                                                        "La quantité récolté"),
+                                                        "La quantité récoltée"),
                                         validator: (value) {
                                           if (value!.isEmpty) {
                                             return "La quantité est obligatoire ";
@@ -132,9 +130,7 @@ class _SpeculationOutPageState extends State<SpeculationOutPage> {
                               formattedDate = formatter.format(date);
                             });
                           }, currentTime: DateTime.now(), locale: LocaleType.fr);
-                                },))),
-
-                        
+                                },))),                   
                               Row(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: <Widget>[
@@ -159,14 +155,10 @@ class _SpeculationOutPageState extends State<SpeculationOutPage> {
                                             bottom: 15.0,
                                             left: 25.0,
                                             right: 25.0),
-                                        child: Text(
+                                        child: DynamicText(
                                           'VALIDER',
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 24.0,
-                                            decoration: TextDecoration.none,
-                                            fontWeight: FontWeight.normal,
-                                          ),
+                                            FontWeight.normal,
+                                            Colors.white,
                                         ),
                                       ),
                                       onPressed: () {

@@ -49,7 +49,7 @@ class _SpeculationRegisterPageState extends State<SpeculationRegisterPage> {
           backgroundColor: Colors.white,
           elevation: 0.0,
           title: ClipRect(child: Image.asset('images/logoFarm.gif',width: 60.0,height: 60.0,)),
-          actions: <Widget>[ IconButton(icon: const Icon(Icons.local_florist_outlined),onPressed: () {})],
+          //actions: <Widget>[ IconButton(icon: const Icon(Icons.local_florist_outlined),onPressed: () {})],
         )),
       body: Container( child: formular(),
         decoration: BoxDecoration(image: DecorationImage(image: AssetImage("images/speculation.jpg"),fit: BoxFit.cover,),),
@@ -144,7 +144,7 @@ class _SpeculationRegisterPageState extends State<SpeculationRegisterPage> {
                                                     icon: Icon(Icons
                                                         .home_outlined),
                                                     labelText:
-                                                        "Choisir la Plantation ")),
+                                                        "Choisir la Plantation")),
                                         suggestionsCallback: (pattern) {
                                           return plantings
                                               .where((element) => element
@@ -180,8 +180,7 @@ class _SpeculationRegisterPageState extends State<SpeculationRegisterPage> {
                                       ),
                               ),
                         Padding(padding: const EdgeInsets.symmetric(vertical:20.0),
-                        child: Center(child:TextButton( child: Text(formattedDate,style: TextStyle(fontSize: 20.0,color: Colors.black),),
-                        
+                        child: Center(child:TextButton( child: Text(formattedDate,style: TextStyle(fontSize: 20.0,color: Colors.black),),                   
                                 onPressed: () {
                                   DatePicker.showDatePicker(context,
                               showTitleActions: true,
@@ -287,10 +286,10 @@ class _SpeculationRegisterPageState extends State<SpeculationRegisterPage> {
       var response = await CallApi().postData(data, "/api/v1/speculation");
       var body = jsonDecode(utf8.decode(response.bodyBytes));
     if(body['success']){
-      MyWidget().notification(context,"Enregistement réussit");
+      MyWidget().notification(context,"Enregistrement réussi");
       Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => FarmingPage()));
     }else{
-      MyWidget().notification(context,"Echec de l'enregistement");
+      MyWidget().notification(context,"Echec de l'enregistrement");
     }
   }
 }

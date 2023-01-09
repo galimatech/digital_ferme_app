@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:agri_galimatech/page/utilWidgets/TitleDynamic.dart';
+
 import '../../page/stockWidgets/matiere_history.dart';
 import '../../page/stockWidgets/stock_detail.dart';
 import '../../page/stockWidgets/stock_history.dart';
@@ -59,7 +61,7 @@ var _formKey = GlobalKey<FormState>();
             labelColor: Color(0xFF7ED957),
             tabs: <Widget>[
               Tab(icon: Icon(Icons.cloud_upload_outlined),text: "Stock Produit",),
-              Tab(icon: Icon(Icons.cloud_download_outlined),text: "Stock Matiére",)]),),
+              Tab(icon: Icon(Icons.cloud_download_outlined),text: "Stock Matière",)]),),
         floatingActionButton: SpeedDial(
           animatedIcon: AnimatedIcons.menu_close,
           overlayColor: Colors.black,
@@ -67,13 +69,13 @@ var _formKey = GlobalKey<FormState>();
           children: [
             SpeedDialChild(
               child: Icon(Icons.home_outlined,color: Colors.green,),
-              label: "Accueille",
+              label: "Accueil",
               labelStyle: TextStyle(color: Colors.green),
               onTap: () => Navigator.pushAndRemoveUntil<void>(context,MaterialPageRoute<void>(
                 builder: (BuildContext context) => HomePage(),),ModalRoute.withName("/"))),
             SpeedDialChild(
               child:  Icon(Icons.local_florist_outlined,color: Colors.green,),
-              label: "Stock nouveau matiere",
+              label: "Stock nouveau matière",
               labelStyle: TextStyle(color: Colors.green),
               onTap: () => showDialog(context: context, builder: (_){
               return NewMatiere();
@@ -81,7 +83,7 @@ var _formKey = GlobalKey<FormState>();
             ),
             SpeedDialChild(
               child: Icon(Icons.local_florist_outlined,color: Colors.green),
-              label: "Historique des matiéres",
+              label: "Historique des matières",
               labelStyle: TextStyle(color: Colors.green),
               onTap: () => Navigator.push(context,MaterialPageRoute(builder: (_) => MatiereHistoryPage()))
             ),
@@ -131,7 +133,7 @@ var _formKey = GlobalKey<FormState>();
 Widget itemProduct() {
     return GridView.builder(
       itemCount: products.length,
-      padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width / 10, vertical: 20),
+      padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width / 15, vertical: 20),
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2,crossAxisSpacing: 10.0,mainAxisSpacing: 10.0),
       itemBuilder: (BuildContext context,int index){
         return GestureDetector(
@@ -145,15 +147,16 @@ Widget itemProduct() {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(products[index]["product"],style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),textAlign: TextAlign.center,),
-                      Text(products[index]["quantity"].toString(),style: TextStyle(color: Color(0xFF7ED957), fontSize: 22, fontWeight: FontWeight.bold),),
-                      Text(products[index]["unit"],style: TextStyle(color: Colors.white, fontSize: 19, fontWeight: FontWeight.bold),),
+                      DynamicText(products[index]["product"], FontWeight.bold, Colors.white ,//textAlign: TextAlign.center,
+                      ),
+                      DynamicText(products[index]["quantity"].toString(), FontWeight.bold, Color(0xFF7ED957),),
+                      DynamicText(products[index]["unit"], FontWeight.bold, Colors.white,),
                     ],))),);},);}
 
 Widget itemMerchandise() {
     return GridView.builder(
       itemCount: stocks.length,
-      padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width / 10, vertical: 20),
+      padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width / 15, vertical: 20),
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2,crossAxisSpacing: 0.0,mainAxisSpacing: 10.0),
       itemBuilder: (BuildContext context,int index){
         return GestureDetector(
@@ -166,11 +169,14 @@ Widget itemMerchandise() {
                       borderRadius: BorderRadius.all(Radius.circular(30))),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    
                     children: [
-                      Text(stocks[index]["product"],style: TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.bold),textAlign: TextAlign.center,),
-                      Text(stocks[index]["quantity"].toString(),style: TextStyle(color: Color(0xFF7ED957), fontSize: 20, fontWeight: FontWeight.bold),),
-                      Text("En Boutique",style: TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.bold),textAlign: TextAlign.center,),
-                      Text(stocks[index]["inShop"].toString(),style: TextStyle(color: Color(0xFF7ED957), fontSize: 20, fontWeight: FontWeight.bold),),
+                      DynamicText(stocks[index]["product"],FontWeight.bold, Colors.white,//textAlign: TextAlign.center,
+                      ),
+                      DynamicText(stocks[index]["quantity"].toString(),FontWeight.bold,Color(0xFF7ED957), ),
+                      DynamicText("En Boutique", FontWeight.bold, Colors.white,//textAlign: TextAlign.center,
+                      ),
+                      DynamicText(stocks[index]["inShop"].toString(), FontWeight.bold, Color(0xFF7ED957),),
                     ],))),);},);}
 
 void formDialog(context,String subject) {
@@ -204,7 +210,7 @@ void formDialog(context,String subject) {
                                 child: TextFormField(
                                   keyboardType:TextInputType.number,controller:this.advance,
                                   decoration: InputDecoration(border:OutlineInputBorder(),
-                                   icon: Icon(Icons.hourglass_bottom_outlined), labelText:"La valeur l'avance "),
+                                   icon: Icon(Icons.hourglass_bottom_outlined), labelText:"La valeur à l'avance "),
                                   validator: (value) { if (value!.isEmpty) { return "La valeur de l'avance est obligatoire sinon mettez 0"; } else return null;},),),
                               Padding(
                                 padding: EdgeInsets.symmetric(vertical: 20.0),

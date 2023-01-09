@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'package:agri_galimatech/page/utilWidgets/TitleDynamic.dart';
+
 import '../../page/poultryWidgets/poultry.dart';
 import '../../utils/category.dart';
 import '../../utils/coop.dart';
@@ -51,7 +53,7 @@ class _PoultryRegisterPageState extends State<PoultryRegisterPage> {
           backgroundColor: Colors.white,
           elevation: 0.0,
           title: ClipRect(child: Image.asset('images/logoFarm.gif',width: 60.0,height: 60.0,)),
-          actions: <Widget>[ IconButton(icon: const Icon(Icons.flutter_dash_outlined),onPressed: () {})],
+         /*  actions: <Widget>[ IconButton(icon: const Icon(Icons.flutter_dash_outlined),onPressed: () {})], */
         )),
       body: Container( child: formular(),
         decoration: BoxDecoration(image: DecorationImage(image: AssetImage("images/poultry.png"),fit: BoxFit.cover,),),
@@ -266,14 +268,10 @@ class _PoultryRegisterPageState extends State<PoultryRegisterPage> {
                                             bottom: 15.0,
                                             left: 25.0,
                                             right: 25.0),
-                                        child: Text(
+                                        child: DynamicText(
                                           'VALIDER',
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 24.0,
-                                            decoration: TextDecoration.none,
-                                            fontWeight: FontWeight.normal,
-                                          ),
+                                           FontWeight.normal,
+                                          Colors.white,
                                         ),
                                       ),
                                       onPressed: () {
@@ -334,7 +332,7 @@ class _PoultryRegisterPageState extends State<PoultryRegisterPage> {
       var response = await CallApi().postData(data, "/api/v1/poultry");
       var body = jsonDecode(utf8.decode(response.bodyBytes));
     if(body['success']){
-      MyWidget().notification(context, "Enregistement reussit");
+      MyWidget().notification(context, "Enregistement reussi");
       Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) =>PoultryPage()));
     }else{
       MyWidget().notification(context,"Echec de l'enregistement");

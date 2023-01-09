@@ -1,11 +1,15 @@
 import 'dart:convert';
 
+import 'package:agri_galimatech/page/utilWidgets/TitleDynamic.dart';
+import 'package:agri_galimatech/page/utilWidgets/iconSizeAccueil.dart';
+
 import '../../page/stockWidgets/stock.dart';
 import '../../utils/service.dart';
 import '../../widget/external_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
+import '../utilWidgets/labelDynamic.dart';
 
 class StockProduct extends StatefulWidget {
   final String productName;
@@ -51,7 +55,7 @@ class _StockProductState extends State<StockProduct> {
                 width: 60.0,
                 height: 60.0,
               )),
-              actions: <Widget>[IconButton(icon: const Icon(Icons.storage), onPressed: () {})],
+              /* actions: <Widget>[IconButton(icon: const Icon(Icons.storage), onPressed: () {})], */
             )),
             
         body: Container(
@@ -123,7 +127,7 @@ class _StockProductState extends State<StockProduct> {
               Padding(padding: EdgeInsets.symmetric(vertical: 20.0),
               child: TextFormField(controller: _controllerDescription,keyboardType: TextInputType.multiline,maxLines: 3,
               decoration: InputDecoration(border: OutlineInputBorder(),
-              labelText: "Description",icon: Icon(Icons.spa_outlined)),),),
+              labelText: "Description",icon: const Icon(Icons.spa_outlined)),),),
               Padding(padding: EdgeInsets.all(8.0),
               child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -136,19 +140,16 @@ class _StockProductState extends State<StockProduct> {
                               child: ElevatedButton(
                             style: ButtonStyle(
                               backgroundColor: MaterialStateProperty.all<Color>(Color(0xFF00CC00)),
+                            
                             ),
-                            child: Padding(
+                           child: Padding(
                               padding: EdgeInsets.only(top: 15, bottom: 15.0, left: 25.0, right: 25.0),
-                              child: Text(
+                              child: DynamicText(
                                 'VALIDER',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 24.0,
-                                  decoration: TextDecoration.none,
-                                  fontWeight: FontWeight.normal,
-                                ),
+                                FontWeight.normal,
+                              Colors.white
                               ),
-                            ),
+                           ),
                             onPressed: () {
                               if (_key.currentState!.validate()) _onSave(context);
                             },
