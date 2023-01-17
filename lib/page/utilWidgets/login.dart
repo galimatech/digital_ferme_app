@@ -165,8 +165,14 @@ class _LoginPageState extends State<LoginPage> {
 
     var res = await CallApi().auth(data);
     final body = json.decode(res.body);
-   
-   
+   print(body);
+   if(body['status']== 401){
+     _showMsg(context, "Login ou mot de passe incorrect");
+     setState(() {
+       _isLoading = false;
+     });
+   }
+   else{
     if (body['data']['token'] != null) {
       print('yes');
       SharedPreferences localStorage = await SharedPreferences.getInstance();
@@ -190,7 +196,8 @@ class _LoginPageState extends State<LoginPage> {
       ); 
     }else{
       _showMsg(context, "Login ou mot de passe incorrect");
-    }   
+    }
+   }
     //print(MediaQuery.of(context).size.height);
     //print(MediaQuery.of(context).size.width);
   }

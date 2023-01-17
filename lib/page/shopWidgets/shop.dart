@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+
 import '../../page/utilWidgets/home.dart';
 import '../../utils/service.dart';
 import '../../utils/shop.dart';
@@ -8,6 +10,7 @@ import '../../widget/spinner_widget.dart';
 import "package:flutter/material.dart";
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'admin_sale_list.dart';
 import 'shop_stock.dart';
 
 class ShopPage extends StatefulWidget {
@@ -40,8 +43,24 @@ class _ShopPageState extends State<ShopPage> {
           title: ClipRect(child: Image.asset('images/logoFarm.gif',width: 60.0,height: 60.0,)),
           /* actions: <Widget>[ IconButton(icon: const Icon(Icons.home_outlined),onPressed: () {})], */
         )),
-        floatingActionButton: IconButton(onPressed: (){Navigator.pushAndRemoveUntil<void>(context,MaterialPageRoute<void>(builder: (BuildContext context) => HomePage(),
-      ),ModalRoute.withName("/"));}, icon: const Icon(Icons.home,size: 35.0,)),
+        floatingActionButton:SpeedDial(
+          animatedIcon: AnimatedIcons.menu_close,
+          overlayColor: Colors.black,
+          overlayOpacity: 0.2,
+          children: [
+            SpeedDialChild(
+                child: Icon(Icons.list,color: Colors.green,),
+                label: "Journal ventes",
+                labelStyle: TextStyle(color: Colors.green),
+                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) { return const AdminSaleNews();}))
+            ),
+        SpeedDialChild(
+        child: Icon(Icons.home_outlined,color: Colors.green,),
+        label: "Accueil",
+        labelStyle: TextStyle(color: Colors.green),
+        onTap: () => Navigator.pushAndRemoveUntil<void>(context,MaterialPageRoute<void>(builder: (BuildContext context) => HomePage(),
+        ),ModalRoute.withName("/"))
+    )]),
         body: Container( child: load? Center(child: SpinnerWidget()) : itemStock(),
         decoration: const BoxDecoration(image: DecorationImage(image: AssetImage("images/shop.jpg"),fit: BoxFit.cover,),),),
     );

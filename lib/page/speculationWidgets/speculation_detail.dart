@@ -125,8 +125,7 @@ class _SpeculationDetailPageState extends State<SpeculationDetailPage> {
               padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
               child: ContainerDetails( 
                   listDetails(index),
-                  decorationList(index),
-                  
+                  decorationList(index)
                   )));
         });
   }

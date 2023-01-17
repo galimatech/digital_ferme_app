@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 
   double iconSizeMedia(BuildContext context){  
     if(MediaQuery.of(context).size.height <= 600) {
-      return 75.0 ;
+      return 60.0 ;
     } else {
-      return 100.0;
+      return 80.0;
     }
 }

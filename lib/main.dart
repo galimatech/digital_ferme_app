@@ -2,12 +2,12 @@ import 'page/utilWidgets/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-Future main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+void main()  {
+  /*WidgetsFlutterBinding.ensureInitialized();
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
-  ]);
+  ]);*/
 
   runApp(MyApp());
 }

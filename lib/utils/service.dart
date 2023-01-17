@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 class CallApi{
-    //final String api ='http://192.168.31.208:8080';
+    final String api ='http://192.168.31.91:8080';
     //final String api = 'http://172.20.10.3:8080'; 
     //final String api ='http://127.0.0.1:8080';
-    final String api ='http://51.178.140.26:8080/digitalFerme';
+    //final String api ='http://51.178.140.26:8080/digitalFerme';
      //'http://192.168.0.153:8080';
     late String token;
 

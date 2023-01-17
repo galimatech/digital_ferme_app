@@ -24,7 +24,7 @@ class _SpeculationListPageState extends State<SpeculationListPage> {
   List<Speculation> speculations = [];
   List<Speculation> showSpeculations = [];
   bool load = true;
-
+  final ScrollController _controller = ScrollController();
   @override
   void initState() {
     getPresent(present);
@@ -81,7 +81,9 @@ class _SpeculationListPageState extends State<SpeculationListPage> {
 
   Widget itemList() {
     return ListView.builder(
-      shrinkWrap: true,
+      physics: AlwaysScrollableScrollPhysics(),
+      //controller: _controller,
+       shrinkWrap: false,
         padding: const EdgeInsets.all(8),
         itemCount: showSpeculations.length,
         itemBuilder: (BuildContext context, int index) {
