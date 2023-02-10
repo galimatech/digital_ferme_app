@@ -23,7 +23,7 @@ class _DynamicTextState extends State<DynamicText> {
       fontSiz =20;
     }
     else{
-      fontSiz =30;
+      fontSiz =25;
     }
     return Text(
         widget.title,

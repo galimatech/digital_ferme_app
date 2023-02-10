@@ -93,7 +93,7 @@ class _PoultryPageState extends State<PoultryPage> {
       SizedBox(height: 10,),
       Padding(padding: EdgeInsets.only(left: 10,right: 10),
       child: Container(
-        height: MediaQuery.of(context).size.height/2 -55,
+        height: MediaQuery.of(context).size.height/2 -70,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.only(topRight: Radius.circular(30),bottomLeft: Radius.circular(30),),
           color: Color.fromRGBO(0, 0, 0, 0.7)

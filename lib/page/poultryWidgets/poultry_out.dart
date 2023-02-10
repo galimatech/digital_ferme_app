@@ -31,6 +31,7 @@ class _PoultryOutPageState extends State<PoultryOutPage> {
   TextEditingController _controllerVal = new TextEditingController();
   DateTime _dateTime = DateTime.now();
   late String formattedDate;
+  bool isDead = false;
 
   @override
   void initState() {
@@ -114,6 +115,24 @@ class _PoultryOutPageState extends State<PoultryOutPage> {
                         },
                       ),
                     ),
+                    Padding(padding: const EdgeInsets.symmetric(vertical: 20.0),
+                    child:CheckboxListTile(
+                        title: Text(
+                          "Sortie pour décé",
+                          style: TextStyle(
+                              //color: Color(0xFF7ED957),
+                              fontSize: 18,
+                              fontWeight: FontWeight.normal),
+                        ),
+                        activeColor: Colors.black,
+                        checkColor: Colors.white,
+                        controlAffinity: ListTileControlAffinity.leading,
+                        value: isDead,
+                        onChanged: (bool? value) {
+                          setState(() {
+                            isDead = value!;
+                          });
+                        }),),
                     Padding(
                         padding: const EdgeInsets.symmetric(vertical: 20.0),
                         child: Center(
@@ -257,6 +276,7 @@ class _PoultryOutPageState extends State<PoultryOutPage> {
       'createdOn': createdOn,
       'updatedOn': createdOn,
       'date': formattedDate,
+      'dead': isDead,
       'poultry': poultry.toMap()
     };
 
