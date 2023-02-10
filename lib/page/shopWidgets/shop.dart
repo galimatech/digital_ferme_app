@@ -24,6 +24,7 @@ class _ShopPageState extends State<ShopPage> {
   List<Shop> shops = [];
   bool load = true;
   num imOpen = 0;
+  String role = '';
   TextEditingController _controller = new TextEditingController();
   @override
   void initState() {
@@ -120,6 +121,7 @@ class _ShopPageState extends State<ShopPage> {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
     var shopId = localStorage.getString("shopId");
     var shopName = localStorage.getString("shopName");
+    role = localStorage.getString("role")!;
     if(shopId == null){
           getStatus(shop);
     }else if(shopId == shop.id.toString()){
@@ -142,16 +144,42 @@ class _ShopPageState extends State<ShopPage> {
         ),
         actions: [
           ElevatedButton(onPressed: () async {
-            var data = {
-              "shopId": shop.id,
-              "access": _controller.text
-            };
-            var res = await CallApi().postData(data,"/api/v1/shopStatus") ;
-            var body = jsonDecode(utf8.decode(res.bodyBytes));
-            if(body['success'])
-             confirm(body['message'], shop,body['object']['status'],body['object']['cash']);
-             else
-              MyWidget().notifationAlert(context, body['message'], Colors.red);
+        var data = {
+          "shopId": shop.id,
+          "access": _controller.text,
+          "action": "open"
+        };
+        if (role == 'admin') {
+          var res = await
+          CallApi().postData(data, "/api/v1/admin/shopStatus");
+          var body = jsonDecode(utf8.decode(res.bodyBytes));
+          if(body['success']){
+            SharedPreferences localStorage = await SharedPreferences.getInstance();
+            localStorage.setString("shopId", shop.id.toString());
+            localStorage.setString("shopName", shop.name);
+            localStorage.setString("cash", "0");
+            localStorage.setString("reimburse", "0");
+            Navigator.pushAndRemoveUntil<void>(context,MaterialPageRoute<void>(builder: (BuildContext context) => ShopStockPage(shop.id.toInt()),
+            ),ModalRoute.withName("/"));
+          }
+          else{
+            MyWidget().notifationAlert(context, body['message'], Colors.red);
+        }
+        } else{
+          var res = await CallApi().postData(data,"/api/v1/shopStatus/open");
+          var body = jsonDecode(utf8.decode(res.bodyBytes));
+          if(body['success']){
+            SharedPreferences localStorage = await SharedPreferences.getInstance();
+            localStorage.setString("shopId", shop.id.toString());
+            localStorage.setString("shopName", shop.name);
+            localStorage.setString("cash","0");
+            localStorage.setString("reimburse", "0");
+            Navigator.pushAndRemoveUntil<void>(context,MaterialPageRoute<void>(builder: (BuildContext context) => ShopStockPage(shop.id.toInt()),
+            ),ModalRoute.withName("/"));
+          }
+          else
+            MyWidget().notifationAlert(context, body['message'], Colors.red);
+      }
           }, 
           child: const Text("Soumettre",style: TextStyle(color: Colors.white),)),
           ElevatedButton(onPressed: (){Navigator.of(context).pop();},

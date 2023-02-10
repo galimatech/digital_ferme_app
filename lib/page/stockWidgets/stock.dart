@@ -160,7 +160,7 @@ Widget itemMerchandise() {
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2,crossAxisSpacing: 0.0,mainAxisSpacing: 10.0),
       itemBuilder: (BuildContext context,int index){
         return GestureDetector(
-          onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => StockDeatilPage(stocks[index]["actualy"].toString(),stocks[index]["product"]))),
+          onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => StockDeatilPage(stocks[index]["product"]))),
           child: Card(
               elevation: 0,
               color: Color.fromRGBO(0, 0, 0, 0.5),

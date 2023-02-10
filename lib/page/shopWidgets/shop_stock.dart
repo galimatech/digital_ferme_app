@@ -145,6 +145,13 @@ class CloseShop extends StatefulWidget {
 
 class _CloseShopState extends State<CloseShop> {
   TextEditingController _controller = new TextEditingController();
+  String role = "";
+  @override
+  void initState() {
+   getRole();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
@@ -159,19 +166,42 @@ class _CloseShopState extends State<CloseShop> {
           ElevatedButton(onPressed: () async {
             var data = {
               "shopId": widget.shopId,
-              "access": _controller.text
+              "access": _controller.text,
+              "action": "close",
             };
-            var res = await CallApi().postData(data,"/api/v1/shopStatus") ;
-            var body = jsonDecode(utf8.decode(res.bodyBytes));
-            if(body['success'])
-             confirm(body['message'], widget.shopId,body['object']['status'],body['object']['cash']);
-             else
-              MyWidget().notifationAlert(context, body['message'], Colors.red);
-          }, 
-          child: Text("Soumettre",style: TextStyle(color: Colors.white),)),
+            if(role == "admin"){
+              var res = await
+              CallApi().postData(data, "/api/v1/admin/shopStatus");
+              var body = jsonDecode(utf8.decode(res.bodyBytes));
+              if(body['success']){
+                SharedPreferences localStorage = await SharedPreferences.getInstance();
+                localStorage.remove("shopId");
+                localStorage.remove("shopName");
+                localStorage.remove("reimburse");
+                Navigator.pushAndRemoveUntil<void>(context,MaterialPageRoute<void>(builder: (context) => ShopPage()),
+                    ModalRoute.withName("/"));
+              }
+              else{
+                MyWidget().notifationAlert(context, body['message'], Colors.red);
+              }
+            }
+            else{
+              var res = await CallApi().postData(data,"/api/v1/shopStatus/close");
+              var body = jsonDecode(utf8.decode(res.bodyBytes));
+              if(body['success']){
+                SharedPreferences localStorage = await SharedPreferences.getInstance();
+                localStorage.remove("shopId");
+                localStorage.remove("shopName");
+                localStorage.remove("reimburse");
+                Navigator.pushAndRemoveUntil<void>(context,MaterialPageRoute<void>(builder: (context) => ShopPage()),
+                    ModalRoute.withName("/"));
+              }
+              else MyWidget().notifationAlert(context, body['message'], Colors.red);
+          };},
+          child: const Text("Soumettre",style: TextStyle (color: Colors.white),)),
           ElevatedButton(onPressed: (){Navigator.of(context).pop();},
            style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.red)),
-           child: Text("Abandonner",style: TextStyle(color: Colors.white),)),
+           child: const Text("Abandonner",style: TextStyle(color: Colors.white),)),
         ],
       );
   }
@@ -203,6 +233,11 @@ class _CloseShopState extends State<CloseShop> {
         ],
       );
     });
+  }
+
+  void getRole() async{
+    SharedPreferences localStorage = await SharedPreferences.getInstance();
+    role = localStorage.getString("role")!;
   }
 }
 

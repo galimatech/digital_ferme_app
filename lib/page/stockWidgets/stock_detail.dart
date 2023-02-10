@@ -8,23 +8,22 @@ import '../../widget/spinner_widget.dart';
 import 'package:flutter/material.dart';
 
 class StockDeatilPage extends StatefulWidget {
-  final String inStore;
   final String product;
-  const StockDeatilPage(this.inStore,this.product);
+  const StockDeatilPage(this.product, {super.key});
 
   @override
-  State<StockDeatilPage> createState() => _StockDeatilPageState(this.inStore,this.product);
+  State<StockDeatilPage> createState() => _StockDeatilPageState();
 }
 
 class _StockDeatilPageState extends State<StockDeatilPage> {
-  String inStore;
-  String product;
-  _StockDeatilPageState(this.inStore,this.product);
+  String inStore = "0";
+  bool loadInStore = true;
   bool load = true;
   List stocks = [];
   @override
   void initState() {
-    getStock(this.product);
+    getStock(widget.product);
+    getCurrentStockState(widget.product);
     super.initState();
   }
 
@@ -45,7 +44,7 @@ class _StockDeatilPageState extends State<StockDeatilPage> {
             ),
           ),
           padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-          child: load ? Center( child: SpinnerWidget() ): screen(),
+          child: load ? Center( child: SpinnerWidget() ): screen(inStore),
         ));
   }
 
@@ -59,7 +58,17 @@ class _StockDeatilPageState extends State<StockDeatilPage> {
       });
   }
 
-   Widget screen() {
+  Future<void> getCurrentStockState(String product) async{
+    var res = await CallApi().getData("/api/v1/outgoing/product/$product");
+    var body = jsonDecode(utf8.decode(res.bodyBytes));
+    if(body["success"]) {
+      setState(() {
+        inStore = body['inStore'].toString();
+        loadInStore = false;
+      });
+    }
+  }
+   Widget screen(String inStore) {
     return  Column(
         children: <Widget>[
           Expanded(
@@ -73,7 +82,7 @@ class _StockDeatilPageState extends State<StockDeatilPage> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      DynamicText("Stock de "+product, FontWeight.bold,Colors.white),
+                      DynamicText("Stock de "+widget.product, FontWeight.bold,Colors.white),
                       DynamicText("En entrepot : "+inStore, FontWeight.bold, Colors.white,)
                     ]
                   )))),
@@ -89,7 +98,7 @@ class _StockDeatilPageState extends State<StockDeatilPage> {
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2,crossAxisSpacing: 10.0,mainAxisSpacing: 10.0),
       itemBuilder: (BuildContext context,int index){
         return GestureDetector(
-          onTap: () {moveDirection(Shop.fromJson(stocks[index]["shop"]), product); },
+          onTap: () {moveDirection(Shop.fromJson(stocks[index]["shop"])); },
             //MyWidget().formReverse(context,product,stocks[index]["shop"]["id"].toString(),stocks[index]["shop"]["name"]);},
           child: Card(
               elevation: 0,
@@ -108,12 +117,12 @@ class _StockDeatilPageState extends State<StockDeatilPage> {
 
 
 
- void moveDirection(Shop shop,String product){
+ void moveDirection(Shop shop,){
    TextEditingController controller = new TextEditingController();
    controller.text="0";
     showDialog(context: context, builder: (context){
       return AlertDialog(
-        title: Text("Déplacer des "+product,style: TextStyle(fontSize: 20),),
+        title: Text("Déplacer des "+widget.product,style: TextStyle(fontSize: 20),),
         content: Container(height: 200.0, child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -123,8 +132,8 @@ class _StockDeatilPageState extends State<StockDeatilPage> {
               decoration: InputDecoration(border: OutlineInputBorder(),
               icon: Icon(Icons.hourglass_bottom_outlined),
               labelText: "La quantité")),
-              ElevatedButton(onPressed: (){postStock(product,controller.text,"in",shop.id);}, child: DynamicLabel("De "+shop.name+" vers l'entrepot", FontWeight.normal, Colors.white)),
-            ElevatedButton(onPressed: (){postStock(product,controller.text,"out",shop.id);}, child: DynamicLabel("De l'entrepot vers "+shop.name, FontWeight.normal,Colors.white))
+              ElevatedButton(onPressed: (){postStock(widget.product,controller.text,"in",shop.id);}, child: DynamicLabel("De "+shop.name+" vers l'entrepot", FontWeight.normal, Colors.white)),
+            ElevatedButton(onPressed: (){postStock(widget.product,controller.text,"out",shop.id);}, child: DynamicLabel("De l'entrepot vers "+shop.name, FontWeight.normal,Colors.white))
           ],
         ),
       ));
